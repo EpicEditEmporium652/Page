@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Roblox Luau Scripter specializing in custom game systems, gameplay mechanics, cinematics, and physics simulations. Available for commissions.">
+    <title>Roblox Luau Scripter - Custom Game Systems</title>
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & THEME
+           ========================================================================== */
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border-default: #30363d;
+            --border-active: #8b949e;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-red: #f85149;
+            --accent-yellow: #d29922;
+            --accent-purple: #bc8cff;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --transition-fast: 150ms ease-in-out;
+            --transition-normal: 250ms ease-in-out;
+        }
+
+        /* ==========================================================================
+           2. RESET & BASE STYLES
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: #79c0ff;
+            text-decoration: underline;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff;
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 2.5rem; letter-spacing: -0.02em; }
+        h2 { font-size: 2rem; border-bottom: 1px solid var(--border-default); padding-bottom: 0.75rem; margin-bottom: 2rem; }
+        h3 { font-size: 1.25rem; }
+        
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul, ol { margin-bottom: 1rem; padding-left: 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+
+        /* ==========================================================================
+           3. LAYOUT & CONTAINERS
+           ========================================================================== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ==========================================================================
+           4. COMPONENTS: HEADER & NAVIGATION
+           ========================================================================== */
+        .top-bar {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-default);
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+        }
+
+        .top-bar a {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .top-bar a:hover {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        header {
+            background-color: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-default);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+        }
+
+        nav {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        nav a {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+            background-color: var(--bg-tertiary);
+            text-decoration: none;
+        }
+
+        nav a.nav-cta {
+            background-color: var(--accent-green);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        nav a.nav-cta:hover {
+            background-color: #2ea043;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           5. COMPONENTS: HERO SECTION
+           ========================================================================== */
+        #hero {
+            text-align: center;
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(56, 139, 253, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 139, 253, 0.4);
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-badge::before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-actions {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* ==========================================================================
+           6. COMPONENTS: BUTTONS
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #4090ff;
+            color: #ffffff;
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-default);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-default);
+            color: #ffffff;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background-color: var(--accent-green);
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background-color: #2ea043;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        /* ==========================================================================
+           7. COMPONENTS: CARDS
+           ========================================================================== */
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            transition: border-color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .card:hover {
+            border-color: var(--border-active);
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-icon {
+            font-size: 1.25rem;
+        }
+
+        /* ==========================================================================
+           8. COMPONENTS: PROJECTS & VIDEO EMBEDS
+           ========================================================================== */
+        .project-card {
+            margin-bottom: 3rem;
+        }
+
+        .project-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .video-embed-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-default);
+            margin: 1.5rem 0;
+            background-color: #000000;
+        }
+
+        .video-embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .tech-breakdown {
+            background-color: var(--bg-primary);
+            border-left: 3px solid var(--accent-blue);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .tech-breakdown strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-breakdown ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tech-breakdown li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-breakdown li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        /* ==========================================================================
+           9. COMPONENTS: TABLES
+           ========================================================================== */
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        th {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            color: var(--text-secondary);
+            background-color: var(--bg-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: var(--bg-secondary);
+        }
+
+        /* ==========================================================================
+           10. COMPONENTS: CODE SHOWCASE
+           ========================================================================== */
+        .code-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-default);
+        }
+
+        .code-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .code-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background-color: var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+        }
+
+        /* ==========================================================================
+           11. COMPONENTS: PROCESS STEPS
+           ========================================================================== */
+        .process-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.25rem;
+        }
+
+        .step-content p {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           12. COMPONENTS: FIT CHECK
+           ========================================================================== */
+        .fit-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .fit-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .fit-good {
+            color: var(--accent-green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .fit-bad {
+            color: var(--accent-red);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           13. COMPONENTS: PRICING & GUARANTEE
+           ========================================================================== */
+        .pricing-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px rgba(63, 185, 80, 0.1);
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .price-note {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .pricing-features li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+
+        .guarantee-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            background-color: rgba(63, 185, 80, 0.05);
+            border: 1px solid var(--accent-green);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .guarantee-box strong {
+            color: var(--accent-green);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* ==========================================================================
+           14. COMPONENTS: CONTACT & TEMPLATE
+           ========================================================================== */
+        .contact-template {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-template h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-template p {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--accent-blue);
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* ==========================================================================
+           15. COMPONENTS: FOOTER
+           ========================================================================== */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border-default);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--text-secondary);
+        }
+
+        footer a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* ==========================================================================
+           16. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            
+            header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .top-bar .container {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+        
+        /* ==========================================================================
+           17. COMPONENTS: TESTIMONIALS
+           ========================================================================== */
+        .testimonial-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+        }
+
+        .testimonial-avatar {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--border-active);
+            object-fit: cover;
+            background-color: var(--bg-tertiary);
+        }
+
+        .testimonial-content {
+            flex: 1;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-rating {
+            color: var(--accent-yellow);
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .testimonial-quote {
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .testimonial-context {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-default);
+        }
+
+        .testimonial-context strong {
+            color: var(--accent-blue);
+        }
+
+        @media (max-width: 640px) {
+            .testimonial-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .testimonial-header {
+                justify-content: center;
+            }
+        }
+        
+        /* ==========================================================================
+           18. COMPONENTS: TESTIMONIAL PROOF (SCREENSHOT)
+           ========================================================================== */
+        .testimonial-proof {
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background-color: var(--bg-tertiary);
+            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+
+        .testimonial-proof img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            max-height: 400px;
+            object-position: top;
+        }
+
+        .proof-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: rgba(13, 17, 23, 0.9);
+            backdrop-filter: blur(4px);
+            color: var(--accent-green);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            z-index: 10;
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <a href="https://paypal.me/AhmedZgaoui" target="_blank">
+                <span>💳</span> PayPal
+            </a>
+            <a href="https://discord.gg/FNWZ7CBGcT" target="_blank">
+                <span>💬</span> Discord
+            </a>
+            <a href="mailto:epiceditemporium@proton.me">
+                <span>✉️</span> Email
+            </a>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <a href="#hero" class="logo">
+                <span>◈</span> Luau
+            </a>
+            <nav>
+                <a href="#why">Why Hire Me</a>
+                <a href="#work">Work</a>
+                <a href="#skills">Skills</a>
+                <a href="scripts.html">Scripts</a>
+                <a href="#process">Process</a>
+                <a href="#pricing">Pricing</a>
+                <a href="https://discord.gg/FNWZ7CBGcT" class="nav-cta" target="_blank">Message Me</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <div class="hero-badge">Open for Commissions</div>
+                <h1>Custom Roblox systems<br>you can drop straight into your game.</h1>
+                <p class="hero-subtitle">
+                    Gameplay mechanics · cinematics · physics & simulation systems.<br>
+                    Solo Luau scripter. I build clean, tested systems for Roblox games and integrate them into your existing project. Scripting only. No VFX or 3D modeling.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">1.5 Mo</span>
+                        <span class="stat-label">To ship FFD System</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">91/100</span>
+                        <span class="stat-label">Rated on RoHire</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">$5</span>
+                        <span class="stat-label">Starting Price</span>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="https://discord.gg/FNWZ7CBGcT" class="btn btn-primary" target="_blank">Message me on Discord</a>
+                    <a href="https://rohire.dev/portfolio-rater?id=134" class="btn btn-secondary" target="_blank">View RoHire Breakdown</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Hire Me -->
+        <section id="why">
+            <div class="container">
+                <h2>WHY HIRE ME</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3><span class="card-icon">✅</span> Tested before delivery</h3>
+                        <p>Edge cases handled before you receive the files. You get working code, not a debugging task.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="card-icon">🔒</span> Clean server/client separation</h3>
+                        <p>Server owns authority. Client handles visuals. No exploitable shortcuts, ever.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="card-icon">🧩</span> Modular and reusable</h3>
+                        <p>Systems are written to extend. Plug them into other projects without rewiring from scratch.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="card-icon">🔌</span> Drops into your existing game</h3>
+                        <p>I work inside your project structure, not in isolation. Scripts fit what you already have.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="card-icon">⚡</span> Fast for small commissions</h3>
+                        <p>Small scripts and fixes turn around quickly. No waiting weeks for a simple system.</p>
+                    </div>
+                    <div class="card">
+                        <h3><span class="card-icon">🎯</span> Scoped honestly upfront</h3>
+                        <p>If something is not feasible, I say so before work starts. No wasted money.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="work">
+            <div class="container">
+                <h2>PROJECTS</h2>
+                <p style="margin-bottom: 2rem;">Production systems, built and shipped.</p>
+
+                <div class="project-card card">
+                    <h3>🖥️ Full Facility Destruction System</h3>
+                    <p>Used to create a server-wide cinematic destruction event in a live Roblox game. Every player experiences the sequence simultaneously: interactive prop sequence, nuclear blast with real audio-driven camera shake, phased countdown, and server-wide respawn. Playable now.</p>
+                    
+                    <div class="video-embed-container">
+                        <iframe src="https://www.youtube.com/embed/gxNwwPd7i8M" title="Facility Destruction Cinematic" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://youtu.be/gxNwwPd7i8M?si=yhvH5wQOrhx6ykE5" class="btn btn-primary" target="_blank">▶ Watch on YouTube</a>
+                        <a href="https://www.roblox.com/games/121525030356323/test-site-for-ABCG-2" class="btn btn-secondary" target="_blank">🎮 Try live</a>
+                    </div>
+
+                    <div class="tech-breakdown">
+                        <strong>Technical breakdown:</strong>
+                        <ul>
+                            <li>Multi-step button sequence with indicator lights, keycard scanner, and keypad. Each interaction advances the server state machine through a defined phase gate.</li>
+                            <li>Audio-driven camera shake using real amplitude sampling each frame. Physics impulse on a hanging lamp. Lighting exposure flash on detonation. Not a screen overlay effect.</li>
+                            <li>Typewriter broadcast with punctuation-aware character timing, synced to audio playback.</li>
+                            <li>Full screen transition (white to black) with gradient separator lines, followed by coordinated server-wide respawn.</li>
+                            <li>Client-side phase architecture. Each phase runs locally after a single remote signal, keeping visuals smooth regardless of server load.</li>
+                        </ul>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://discord.gg/FNWZ7CBGcT" class="btn btn-secondary" target="_blank">Want something like this? Message me on Discord</a>
+                    </div>
+                </div>
+
+                <div class="project-card card">
+                    <h3>🚗 Inline-4 Engine Simulation with Gear Drivetrain</h3>
+                    <p>Real-time physics drivetrain for vehicle systems. Every part moves from actual physics constraints, not animation. Crankshaft, pistons, gear ratios, combustion audio in firing order, and a fully working wheel drivetrain. No pre-baked motion anywhere.</p>
+                    
+                    <div class="video-embed-container">
+                        <iframe src="https://www.youtube.com/embed/ZObuodU8pMo" title="Inline-4 Engine Simulation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                    <div class="project-links">
+                        <a href="https://youtu.be/ZObuodU8pMo?si=Bjxd609wfaKOoHQU" class="btn btn-primary" target="_blank">▶ Watch on YouTube</a>
+                    </div>
+
+                    <div class="tech-breakdown">
+                        <strong>Technical breakdown:</strong>
+                        <ul>
+                            <li>Crankshaft and piston motion driven by Roblox physics constraints. No keyframe animation or tweening at any point.</li>
+                            <li>Per-cylinder combustion audio triggered in the correct 1-3-4-2 firing order, synchronized to physical rotation.</li>
+                            <li>Gear ratios derived mathematically from part geometry, producing accurate torque and speed changes through each gear.</li>
+                            <li>Bevel gear direction change from engine to axle, with a fully working wheel drivetrain driven by the simulated output shaft.</li>
+                        </ul>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://discord.gg/FNWZ7CBGcT" class="btn btn-secondary" target="_blank">Need a physics or vehicle system? Message me on Discord</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Capabilities -->
+        <section id="skills">
+            <div class="container">
+                <h2>CAPABILITIES</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>System</th>
+                                <th>Description</th>
+                                <th>Proof</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Cinematic Sequences</strong></td>
+                                <td>Camera effects, screen transitions, exposure flash, typewriter broadcasts, phased event timelines</td>
+                                <td><a href="scripts.html#Shake.lua">Shake.lua</a> · <a href="scripts.html#Main.lua">Main.lua</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gameplay Mechanics</strong></td>
+                                <td>Buttons, keypads, keycard scanners, doors, levers, state machines, multi-step interactions</td>
+                                <td><a href="scripts.html#Main.lua">Main.lua</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>UI Systems</strong></td>
+                                <td>Custom proximity prompts, notification modules, HUDs, status displays, progress bars</td>
+                                <td><a href="scripts.html#ProximityPrompt.lua">ProximityPrompt.lua</a> · <a href="scripts.html#Notification.lua">Notification.lua</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Admin Systems</strong></td>
+                                <td>Chat commands, persistent bans, DataStore ranks, offline ranking, player targeting</td>
+                                <td><a href="scripts.html#Admin.lua">Admin.lua</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DataStore</strong></td>
+                                <td>Save/load player data, persistent stats and bans across server restarts</td>
+                                <td><a href="scripts.html#Admin.lua">Admin.lua</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Physics & Simulation</strong></td>
+                                <td>Vehicle drivetrains, engine simulation, gear ratios, audio-driven impulse, rope constraints</td>
+                                <td>I4 Engine project above</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Combat Systems</strong></td>
+                                <td>Projectile physics, bullet drop, ballistic trajectory, hitbox detection</td>
+                                <td>No public demo. Ask for details</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bug Fixing</strong></td>
+                                <td>I work inside existing codebases, reproduce issues, and test edge cases before returning the fix</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Custom Requests</strong></td>
+                                <td>Not sure if it's in scope? Ask. I'll give you a straight answer</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Showcase -->
+        <section id="scripts">
+            <div class="container">
+                <h2>CODE</h2>
+                <p style="margin-bottom: 2rem;">Ready-to-use scripts. <a href="scripts.html">View full source code on the Scripts page →</a></p>
+                
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Main.lua</h3>
+                        <span class="code-tag">Server Script</span>
+                    </div>
+                    <p>Server script for the full destruction sequence. Builds all interactive props (button, keypad, scanner, indicator lights) at runtime. Runs a state machine through the interaction flow. Keycard swipe, countdown phases, facility-wide light change, blast door and elevator lockdown, music sequencing. Then resets and respawns all players.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Shake.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Nuclear explosion client script. Reads audio amplitude each frame and offsets the camera in real time, so the shake follows the audio waveform. Also applies physics to a hanging lamp and triggers a real lighting exposure flash. Not a screen overlay.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>ProximityPrompt.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Full replacement for Roblox's default proximity prompt. Custom UI with icon, action label, hold-to-activate bar, hover highlight, and sound on show. Detects touch vs keyboard automatically. Assets preload to avoid pop-in.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Admin.lua</h3>
+                        <span class="code-tag">Server Script</span>
+                    </div>
+                    <p>Admin system. Prefix-based chat commands with <code>me</code> / <code>all</code> / <code>others</code> / partial name targeting. Bans and ranks persist via DataStore across server restarts. Supports offline ranking. You can promote or ban a player who isn't currently in the game.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Phase1.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Phase 1 client. On server signal, lights the phase indicator and triggers the screen display.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Phase2.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Phase 2 client. Receives a timing value from the server and runs the full progress bar animation locally, 0–100% at whatever speed is specified.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Phase3.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Phase 3 client. Single server fire triggers the activation sound, notification, and a live countdown that ticks every second until the sequence is ready.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Serverviewer_client.lua</h3>
+                        <span class="code-tag">Local Script</span>
+                    </div>
+                    <p>Client side of a real-time server state visualiser. Renders a top-down spectator view with live position updates streamed each frame and part path caching to keep it performant.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Serverviewer_server.lua</h3>
+                        <span class="code-tag">Server Script</span>
+                    </div>
+                    <p>Server side. Collects and fires position data for every relevant part each frame. Disconnects cleanly when the viewer is toggled off.</p>
+                </div>
+                <div class="code-item">
+                    <div class="code-header">
+                        <h3>Notification.lua</h3>
+                        <span class="code-tag">Module Script</span>
+                    </div>
+                    <p>Plug-and-play notification module. Call <code>module.sg("text", duration)</code> from any LocalScript. Handles fade-in, fade-out, and cleanup automatically.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section id="process">
+            <div class="container">
+                <h2>PROCESS</h2>
+                <div class="grid-2">
+                    <div class="process-step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h3>Send your idea</h3>
+                            <p>Describe what you want built. A rough idea is fine. No technical jargon needed.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h3>Quick check</h3>
+                            <p>I confirm whether it is buildable and flag anything that needs adjusting. Honest answer, fast.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h3>Price agreed</h3>
+                            <p>We agree on scope and cost before anything starts. No surprises later.</p>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h3>Build with updates</h3>
+                            <p>I build it and check in as things progress. Easy to adjust direction early if needed.</p>
+                        </div>
+                    </div>
+                    <div class="process-step" style="grid-column: 1 / -1;">
+                        <div class="step-number">05</div>
+                        <div class="step-content">
+                            <h3>Delivery and small fixes</h3>
+                            <p>You get clean files ready to drop in. If something breaks within scope after delivery, I fix it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fit Check -->
+        <section id="fit">
+            <div class="container">
+                <h2>FIT CHECK</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color: var(--accent-green);">Good fit</h3>
+                        <ul class="fit-list">
+                            <li><span class="fit-good">✓</span> Roblox devs who need a system built cleanly</li>
+                            <li><span class="fit-good">✓</span> Solo devs or small teams adding mechanics to an existing game</li>
+                            <li><span class="fit-good">✓</span> Anyone who can describe what they want, even roughly</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent-red);">Not a match</h3>
+                        <ul class="fit-list">
+                            <li><span class="fit-bad">✕</span> Exploit scripts or anything that violates Roblox ToS</li>
+                            <li><span class="fit-bad">✕</span> No idea what you want but expect a finished product</li>
+                            <li><span class="fit-bad">✕</span> Expecting a massive AAA game system for $5 (but $10-$15 micro-tasks are totally fine!)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials -->
+        <section id="testimonials">
+            <div class="container">
+                <h2>CLIENT FEEDBACK</h2>
+                <p style="margin-bottom: 2rem;">Real words from real commissions.</p>
+                
+                <div class="testimonial-card">
+                    <img src="nav.png" alt="N.A.V.I" class="testimonial-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Crect fill=%22%2321262d%22 width=%2280%22 height=%2280%22/%3E%3Ctext fill=%22%238b949e%22 font-family=%22sans-serif%22 font-size=%2214%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EN.A.V.I%3C/text%3E%3C/svg%3E'">
+                    <div class="testimonial-content">
+                        <div class="testimonial-header">
+                            <span class="testimonial-name">N.A.V.I</span>
+                            <span class="testimonial-rating">★★★★★</span>
+                            <span style="color: var(--accent-green); font-weight: 600; font-size: 0.9rem;">10/10</span>
+                        </div>
+                        <p class="testimonial-quote">
+                            "It was very good, accurate, realistic and it made me bring back the old memories of the original game. Turned a video of the game into reality."
+                        </p>
+                        <p class="testimonial-context">
+                            Commissioned: <strong>Full Facility Destruction System</strong> · Delivered on time · 100% satisfaction
+                        </p>
+                        
+                        <!-- THE UNDENIABLE PROOF -->
+                        <div class="testimonial-proof">
+                            <span class="proof-badge">✓ Verified Discord Message</span>
+                            <img src="msg.jpg" alt="Raw Discord screenshot of N.A.V.I's 10/10 review">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing">
+            <div class="container">
+                <h2>PRICING</h2>
+                <div class="grid-3">
+                    <div class="card pricing-card featured">
+                        <h3>Small Systems</h3>
+                        <div class="price-tag">$5 to $15</div>
+                        <p class="price-note">Quick scripts and focused fixes</p>
+                        <ul class="pricing-features">
+                            <li>Simple scripts and utility modules</li>
+                            <li>Bug fixes in existing codebases</li>
+                            <li>Small gameplay mechanics</li>
+                            <li>UI elements and notification systems</li>
+                        </ul>
+                        
+                        <!-- PSYCHOLOGICAL FIX: Positive framing, removed "stranger/scam" implication -->
+                        <div class="guarantee-box">
+                            <strong>🛡️ Micro-Commission Preview Guarantee:</strong>
+                            For commissions under $20, I provide a video preview of the script working perfectly in your baseplate <em>before</em> any payment is requested. Once you verify it works exactly as needed, you send the payment, and I immediately hand over the files. Simple, transparent, and risk-free.
+                        </div>
+                    </div>
+
+                    <div class="card pricing-card">
+                        <h3>Medium Systems</h3>
+                        <div class="price-tag">$15 to $40</div>
+                        <p class="price-note">Multi-script features and structured systems</p>
+                        <ul class="pricing-features">
+                            <li>Gameplay mechanics with state logic</li>
+                            <li>Admin tools with DataStore</li>
+                            <li>Multi-script systems and structured features</li>
+                            <li>Integration into your existing codebase</li>
+                        </ul>
+                    </div>
+
+                    <div class="card pricing-card" style="grid-column: 1 / -1; margin-top: 1.5rem;">
+                        <h3>Larger Systems</h3>
+                        <div class="price-tag">$40 to $80+</div>
+                        <p class="price-note">Full mechanics, cinematics, and physics systems</p>
+                        <ul class="pricing-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.5rem;">
+                            <li>Full mechanics systems</li>
+                            <li>Cinematic sequences</li>
+                            <li>Physics-based systems</li>
+                            <li>Scoped per project. Message for an exact quote.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">Most commissions fall in the small-to-medium range. Final price depends on scope. · Payment via PayPal.</p>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="container">
+                <h2>CONTACT</h2>
+                <h3>Ready to build something?</h3>
+                <p>Send a message describing what you need. I will tell you if it is buildable and give you a price before anything starts.</p>
+                
+                <div style="margin: 2rem 0;">
+                    <a href="https://discord.gg/FNWZ7CBGcT" class="btn btn-primary" target="_blank" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Message me on Discord</a>
+                    <p style="margin-top: 1rem; color: var(--text-secondary);">Email: <a href="mailto:epiceditemporium@proton.me">epiceditemporium@proton.me</a></p>
+                </div>
+
+                <!-- PSYCHOLOGICAL FIX: Copy-Paste Template to remove decision friction -->
+                <div class="contact-template">
+                    <h4>💡 Quick start for $10-$15 micro-commissions:</h4>
+                    <p>Don't know what to say? Just copy and paste this into Discord and fill in the blanks!</p>
+                    <div class="code-block">Hi! I need a quick script/fix.
+What I need: [Describe it simply]
+My budget: $10
+Here is my game link (if applicable): [Link]</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Code shown for portfolio purposes only. · Built by a Solo Luau Scripter.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://paypal.me/AhmedZgaoui" target="_blank">PayPal</a> · 
+                <a href="https://discord.gg/FNWZ7CBGcT" target="_blank">Discord</a> · 
+                <a href="mailto:epiceditemporium@proton.me">Email</a>
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
