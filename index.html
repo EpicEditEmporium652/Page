@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Roblox Luau Scripter specializing in server-authoritative systems, physics simulations, and custom game mechanics. Clean, tested code delivered fast.">
+    <title>Roblox Luau Scripter - Custom Game Systems</title>
+    <style>
+        :root {
+            --primary: #0066cc;
+            --secondary: #1a1a2e;
+            --accent: #00d9ff;
+            --text: #e0e0e0;
+            --bg: #0f0f1a;
+            --card-bg: #16213e;
+            --success: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Fixed, Always Visible */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Hero Section - Immediate Value Proposition */
+        .hero {
+            margin-top: 70px;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg) 100%);
+            border-bottom: 3px solid var(--primary);
+        }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--success);
+            color: var(--secondary);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            opacity: 0.85;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 2px solid var(--text);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .section-subtitle {
+            color: var(--text);
+            opacity: 0.8;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Section - Priority #1 */
+        .projects-grid {
+            display: grid;            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1.5rem;
+        }
+
+        .project-header h3 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-description {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            border: 1px solid var(--accent);
+        }
+
+        /* Why Hire Me - Value Proposition */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateX(5px);
+            border-left-color: var(--accent);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        /* Testimonials - Social Proof (Critical for Conversion) */
+        .testimonials {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid var(--primary);
+        }
+
+        .testimonial-card {
+            background: var(--bg);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--success);
+        }
+
+        .testimonial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-rating {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;            opacity: 0.9;
+        }
+
+        .testimonial-meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .verified-badge {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Pricing - Clear and Transparent */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .pricing-card:hover {            border-color: var(--primary);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .guarantee-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;        }
+
+        .guarantee-box strong {
+            color: var(--success);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Process - Clear Steps */
+        .process-steps {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .step-content p {
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        /* Contact Section - Multiple Touchpoints */        .contact-section {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid var(--primary);
+            margin-bottom: 3rem;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .contact-section h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .contact-methods {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            background: var(--bg);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-method:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .contact-method-icon {
+            font-size: 2rem;
+        }
+
+        .contact-method-text {
+            text-align: left;        }
+
+        .contact-method-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .contact-method-value {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Quick Start Box */
+        .quick-start {
+            background: rgba(0, 102, 204, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .quick-start h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-start code {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 5px;
+            display: block;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+
+        .footer-content {            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Performance: Minimal animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - Contact info always visible -->
+    <nav>
+        <a href="#" class="logo">AZ.</a>
+        <div class="nav-links">
+            <a href="#projects">Work</a>
+            <a href="#why">Why Me</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#process">Process</a>
+            <a href="https://discord.gg/FNWZ7CBGcT" class="cta-button" target="_blank">Hire Me</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Immediate value proposition -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">✓ Open for Commissions</span>
+            <h1>Roblox Luau Scripter<br><span>Custom Game Systems</span></h1>
+            <p class="hero-subtitle">Server-authoritative mechanics · Physics simulations · Cinematic systems</p>
+            <p class="hero-description">
+                I build clean, tested, and optimized Roblox systems that drop straight into your game. 
+                No toolbox spaghetti. No exploitable shortcuts. Just professional, server-side code that works.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="stat">                    <span class="stat-value">91/100</span>
+                    <span class="stat-label">RoHire Rated</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">$5</span>
+                    <span class="stat-label">Starting Price</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Client Satisfaction</span>
+                </div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="https://discord.gg/FNWZ7CBGcT" class="btn-primary" target="_blank">Start Your Project</a>
+                <a href="#projects" class="btn-secondary">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section - PRIORITY #1 (Research shows clients want to see work first) -->
+    <section id="projects">
+        <h2>Production Systems</h2>
+        <p class="section-subtitle">Real projects built and shipped. Click to see them in action.</p>
+        
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>🖥️ Full Facility Destruction System</h3>
+                    <p>Server-wide cinematic destruction event</p>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Multi-phase interactive sequence with keycard scanner, keypad, indicator lights, 
+                        nuclear blast with audio-driven camera shake, and server-wide respawn. Every player 
+                        experiences the sequence simultaneously.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/gxNwwPd7i8M" target="_blank">▶ Watch Demo</a>
+                        <a href="https://www.roblox.com/games/121525030356323/test-site-for-ABCG-2" target="_blank">🎮 Play Live</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Server Authority</span>
+                        <span class="tag">State Machine</span>
+                        <span class="tag">Audio Sync</span>
+                        <span class="tag">Physics</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>🚗 Inline-4 Engine Simulation</h3>
+                    <p>Real-time physics drivetrain system</p>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Fully functional engine with crankshaft, pistons, gear ratios, and combustion audio 
+                        in 1-3-4-2 firing order. Every part moves from actual physics constraints—no animation 
+                        or tweening.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://youtu.be/ZObuodU8pMo" target="_blank">▶ Watch Demo</a>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tag">Physics Constraints</span>
+                        <span class="tag">Math-based</span>
+                        <span class="tag">Audio Sync</span>
+                        <span class="tag">Vehicle Systems</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - CRITICAL for conversion (34% increase) -->
+    <section id="testimonials">
+        <h2>Client Feedback</h2>
+        <p class="section-subtitle">Real results from real commissions.</p>
+        
+        <div class="testimonials">
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <span class="testimonial-author">N.A.V.I</span>
+                    <span class="testimonial-rating">★★★★★</span>
+                </div>
+                <p class="testimonial-text">
+                    "It was very good, accurate, realistic and it made me bring back the old memories of the 
+                    original game. Turned a video of the game into reality."
+                </p>
+                <div class="testimonial-meta">
+                    <span class="verified-badge">✓ Verified Discord Message</span> · 
+                    Commissioned: Full Facility Destruction System · 100% Satisfaction
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Why Hire Me - Value Proposition -->
+    <section id="why">
+        <h2>Why Hire Me</h2>
+        <p class="section-subtitle">What sets my work apart from other scripters.</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Tested Before Delivery</h3>
+                <p>Edge cases handled before you receive the files. You get working code, not a debugging task.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Clean Server/Client Separation</h3>
+                <p>Server owns authority. Client handles visuals. No exploitable shortcuts, ever.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3>Modular and Reusable</h3>
+                <p>Systems are written to extend. Plug them into other projects without rewiring from scratch.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Drops Into Your Game</h3>
+                <p>I work inside your project structure, not in isolation. Scripts fit what you already have.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Turnaround</h3>
+                <p>Small scripts and fixes turn around quickly. No waiting weeks for a simple system.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Honest Scoping</h3>
+                <p>If something is not feasible, I say so before work starts. No wasted money.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing - Clear and Transparent -->
+    <section id="pricing">
+        <h2>Pricing</h2>
+        <p class="section-subtitle">Transparent pricing. No hidden fees. Payment via PayPal.</p>
+        
+        <div class="pricing-grid">            <!-- Small Systems -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Small Systems</h3>
+                    <div class="pricing-price">$5-$15</div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Quick scripts and fixes</li>
+                    <li>Simple gameplay mechanics</li>
+                    <li>UI elements and notifications</li>
+                    <li>Bug fixes in existing code</li>
+                    <li>Utility modules</li>
+                </ul>
+                <div class="guarantee-box">
+                    <strong>🛡️ Micro-Commission Guarantee</strong>
+                    For commissions under $20, I provide a video preview working in your baseplate BEFORE payment.
+                </div>
+                <a href="https://discord.gg/FNWZ7CBGcT" class="btn-primary" style="display: block; text-align: center; margin-top: 1rem;" target="_blank">Get Started</a>
+            </div>
+
+            <!-- Medium Systems -->
+            <div class="pricing-card featured">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Medium Systems</h3>
+                    <div class="pricing-price">$15-$40</div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Multi-script features</li>
+                    <li>Gameplay with state logic</li>
+                    <li>Admin tools with DataStore</li>
+                    <li>Structured systems</li>
+                    <li>Full codebase integration</li>
+                </ul>
+                <a href="https://discord.gg/FNWZ7CBGcT" class="btn-primary" style="display: block; text-align: center; margin-top: 1rem;" target="_blank">Get Started</a>
+            </div>
+
+            <!-- Large Systems -->
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Large Systems</h3>
+                    <div class="pricing-price">$40-$80+</div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Full mechanics systems</li>
+                    <li>Cinematic sequences</li>
+                    <li>Physics-based systems</li>
+                    <li>Complex simulations</li>
+                    <li>Custom scoped projects</li>
+                </ul>
+                <a href="https://discord.gg/FNWZ7CBGcT" class="btn-primary" style="display: block; text-align: center; margin-top: 1rem;" target="_blank">Get Quote</a>            </div>
+        </div>
+    </section>
+
+    <!-- Process - Clear Steps -->
+    <section id="process">
+        <h2>How It Works</h2>
+        <p class="section-subtitle">Simple, transparent process from idea to delivery.</p>
+        
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3>Send Your Idea</h3>
+                    <p>Describe what you want built. A rough idea is fine. No technical jargon needed.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3>Quick Check</h3>
+                    <p>I confirm whether it's buildable and flag anything that needs adjusting. Honest answer, fast.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3>Price Agreed</h3>
+                    <p>We agree on scope and cost before anything starts. No surprises later.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h3>Build with Updates</h3>
+                    <p>I build it and check in as things progress. Easy to adjust direction early if needed.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">05</div>
+                <div class="step-content">
+                    <h3>Delivery & Fixes</h3>
+                    <p>You get clean files ready to drop in. If something breaks within scope after delivery, I fix it.</p>
+                </div>
+            </div>
+        </div>    </section>
+
+    <!-- Contact Section - Multiple contact points (Research best practice) -->
+    <section id="contact">
+        <div class="contact-section">
+            <h2>Ready to Build Something?</h2>
+            <p class="section-subtitle">Send a message describing what you need. I'll tell you if it's buildable and give you a price before anything starts.</p>
+            
+            <div class="contact-methods">
+                <a href="https://discord.gg/FNWZ7CBGcT" class="contact-method" target="_blank">
+                    <span class="contact-method-icon">💬</span>
+                    <div class="contact-method-text">
+                        <div class="contact-method-label">Discord</div>
+                        <div class="contact-method-value">Fastest Response</div>
+                    </div>
+                </a>
+
+                <a href="mailto:epiceditemporium@proton.me" class="contact-method">
+                    <span class="contact-method-icon">✉️</span>
+                    <div class="contact-method-text">
+                        <div class="contact-method-label">Email</div>
+                        <div class="contact-method-value">epiceditemporium@proton.me</div>
+                    </div>
+                </a>
+
+                <a href="https://paypal.me/AhmedZgaoui" class="contact-method" target="_blank">
+                    <span class="contact-method-icon">💳</span>
+                    <div class="contact-method-text">
+                        <div class="contact-method-label">PayPal</div>
+                        <div class="contact-method-value">Secure Payment</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Quick Start Template -->
+            <div class="quick-start">
+                <h3>💡 Quick Start for $10-$15 Micro-Commissions</h3>
+                <p>Don't know what to say? Just copy and paste this into Discord:</p>
+                <code>Hi! I need a quick script/fix.<br>
+                What I need: [Describe it simply]<br>
+                My budget: $10<br>
+                Here is my game link (if applicable): [Link]</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Contact info repeated (Research best practice) -->
+    <footer>
+        <div class="footer-content">
+            <h3 style="color: var(--accent); margin-bottom: 1rem;">Let's Build Something Amazing</h3>            <p style="margin-bottom: 2rem;">Professional Roblox Luau scripting for serious developers.</p>
+            
+            <div class="footer-links">
+                <a href="https://discord.gg/FNWZ7CBGcT" target="_blank">Discord</a>
+                <a href="mailto:epiceditemporium@proton.me">Email</a>
+                <a href="https://paypal.me/AhmedZgaoui" target="_blank">PayPal</a>
+                <a href="scripts.html">Code Samples</a>
+            </div>
+
+            <div class="footer-bottom">
+                <p>Code shown for portfolio purposes only.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                  © <span id="copyright-year"></span> All rights reserved.
+                </p>
+                <script>
+                  // Automatically updates the copyright year to the current year
+                  document.getElementById("copyright-year").textContent = new Date().getFullYear();
+                </script>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Performance: Minimal JavaScript for fade-in animations -->
+    <script>
+        // Simple intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .feature-card, .pricing-card, .step').forEach((el) => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
